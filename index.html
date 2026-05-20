@@ -531,7 +531,9 @@
       <li><a href="#multiuser">Multi-User</a></li>
       <li><a href="#savings">Savings</a></li>
       <li><a href="#scale">Scale</a></li>
+      <li><a href="#dashboard">Dashboard</a></li>
       <li><a href="#next">Next Steps</a></li>
+      <li><a href="#io2026">I/O 2026</a></li>
     </ul>
   </nav>
 
@@ -1000,6 +1002,184 @@
     </div>
     <div class="callout green" style="margin-top:24px;">
       <strong>While waiting on Vertex AI access:</strong> Start with NotebookLM for savings validation gut-checks — upload APR benchmark docs and rate card references, paste in bids, get narrative feedback. No build required, available today with enterprise Workspace.
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- DASHBOARD -->
+  <section id="dashboard">
+    <div class="section-label">Project Dashboard</div>
+    <h2>Per-Client Status View</h2>
+    <p class="section-sub">One dashboard per client, open to anyone on the team — no login required. Every active project shown as a card, updated automatically by the pipeline as emails are processed.</p>
+
+    <!-- UX diagram: dashboard layout -->
+    <div style="border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:24px;">
+
+      <!-- Dashboard header bar -->
+      <div style="background:var(--card);border-bottom:1px solid var(--border);padding:12px 20px;display:flex;justify-content:space-between;align-items:center;">
+        <div>
+          <span style="font-family:var(--mono);font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;">Client Dashboard —</span>
+          <span style="font-family:var(--mono);font-size:10px;color:var(--accent);text-transform:uppercase;letter-spacing:0.08em;"> Client A</span>
+        </div>
+        <div style="display:flex;gap:8px;">
+          <span style="font-family:var(--mono);font-size:10px;color:var(--green);background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.2);padding:3px 8px;border-radius:4px;">4 Active</span>
+          <span style="font-family:var(--mono);font-size:10px;color:var(--gold);background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.2);padding:3px 8px;border-radius:4px;">1 Needs Attention</span>
+        </div>
+      </div>
+
+      <!-- Project cards grid -->
+      <div style="padding:16px;display:grid;grid-template-columns:1fr 1fr;gap:12px;background:var(--surface);">
+
+        <!-- Card 1: Active -->
+        <div style="background:var(--card);border:1px solid var(--border);border-top:2px solid var(--green);border-radius:8px;padding:16px;">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;">
+            <div>
+              <div style="font-family:var(--mono);font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;">APR-CLTA-BRD1-2026-001</div>
+              <div style="font-size:13px;font-weight:600;color:var(--text);margin-top:3px;">Brand 1 — Spring Campaign Shoot</div>
+            </div>
+            <span style="font-family:var(--mono);font-size:9px;color:var(--green);background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.2);padding:2px 7px;border-radius:4px;white-space:nowrap;">Active</span>
+          </div>
+          <div style="font-size:11px;color:var(--muted);margin-bottom:12px;line-height:1.6;border-left:2px solid var(--border);padding-left:10px;">
+            Last email: Yesterday — Revised deliverables list from director, final cutdown count updated to 12x15s. Awaiting client approval on new timeline.
+          </div>
+          <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:12px;">
+            <div style="display:flex;gap:8px;align-items:center;">
+              <span style="font-family:var(--mono);font-size:9px;color:var(--muted);min-width:80px;">Live Action</span>
+              <span style="font-family:var(--mono);font-size:9px;color:var(--green);">● Complete</span>
+              <span style="font-size:10px;color:var(--muted);">Steve</span>
+            </div>
+            <div style="display:flex;gap:8px;align-items:center;">
+              <span style="font-family:var(--mono);font-size:9px;color:var(--muted);min-width:80px;">Post</span>
+              <span style="font-family:var(--mono);font-size:9px;color:var(--accent);">● In Progress</span>
+              <span style="font-size:10px;color:var(--muted);">Terry</span>
+            </div>
+          </div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap;">
+            <a href="#" style="font-family:var(--mono);font-size:9px;color:var(--accent);background:rgba(79,142,247,0.08);border:1px solid rgba(79,142,247,0.2);padding:3px 8px;border-radius:4px;text-decoration:none;">📁 Drive</a>
+            <a href="#" style="font-family:var(--mono);font-size:9px;color:var(--purple);background:rgba(124,58,237,0.08);border:1px solid rgba(124,58,237,0.2);padding:3px 8px;border-radius:4px;text-decoration:none;">$ ACERO</a>
+            <a href="#" style="font-family:var(--mono);font-size:9px;color:var(--muted);background:rgba(107,107,138,0.08);border:1px solid rgba(107,107,138,0.2);padding:3px 8px;border-radius:4px;text-decoration:none;">📋 2 Action Items</a>
+            <a href="#" style="font-family:var(--mono);font-size:9px;color:var(--muted);background:rgba(107,107,138,0.08);border:1px solid rgba(107,107,138,0.2);padding:3px 8px;border-radius:4px;text-decoration:none;">📎 SOW</a>
+          </div>
+        </div>
+
+        <!-- Card 2: Needs Attention -->
+        <div style="background:var(--card);border:1px solid var(--border);border-top:2px solid var(--gold);border-radius:8px;padding:16px;">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;">
+            <div>
+              <div style="font-family:var(--mono);font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;">APR-CLTA-BRD2-2026-003</div>
+              <div style="font-size:13px;font-weight:600;color:var(--text);margin-top:3px;">Brand 2 — Product Stills</div>
+            </div>
+            <span style="font-family:var(--mono);font-size:9px;color:var(--gold);background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.2);padding:2px 7px;border-radius:4px;white-space:nowrap;">Stalled</span>
+          </div>
+          <div style="font-size:11px;color:var(--muted);margin-bottom:12px;line-height:1.6;border-left:2px solid var(--gold);padding-left:10px;">
+            Last email: 6 days ago — PO still not received from client. Shoot date at risk. No response to follow-up sent Tuesday.
+          </div>
+          <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:12px;">
+            <div style="display:flex;gap:8px;align-items:center;">
+              <span style="font-family:var(--mono);font-size:9px;color:var(--muted);min-width:80px;">Pre-Pro</span>
+              <span style="font-family:var(--mono);font-size:9px;color:var(--gold);">● Blocked</span>
+              <span style="font-size:10px;color:var(--muted);">Julie</span>
+            </div>
+          </div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap;">
+            <a href="#" style="font-family:var(--mono);font-size:9px;color:var(--accent);background:rgba(79,142,247,0.08);border:1px solid rgba(79,142,247,0.2);padding:3px 8px;border-radius:4px;text-decoration:none;">📁 Drive</a>
+            <a href="#" style="font-family:var(--mono);font-size:9px;color:var(--purple);background:rgba(124,58,237,0.08);border:1px solid rgba(124,58,237,0.2);padding:3px 8px;border-radius:4px;text-decoration:none;">$ ACERO</a>
+            <a href="#" style="font-family:var(--mono);font-size:9px;color:var(--gold);background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.2);padding:3px 8px;border-radius:4px;text-decoration:none;">📋 4 Action Items</a>
+            <a href="#" style="font-family:var(--mono);font-size:9px;color:var(--muted);background:rgba(107,107,138,0.08);border:1px solid rgba(107,107,138,0.2);padding:3px 8px;border-radius:4px;text-decoration:none;">📎 Bid</a>
+          </div>
+        </div>
+
+        <!-- Card 3: Active -->
+        <div style="background:var(--card);border:1px solid var(--border);border-top:2px solid var(--green);border-radius:8px;padding:16px;">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;">
+            <div>
+              <div style="font-family:var(--mono);font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;">APR-CLTA-BRD1-2026-002</div>
+              <div style="font-size:13px;font-weight:600;color:var(--text);margin-top:3px;">Brand 1 — Fall Hero Video</div>
+            </div>
+            <span style="font-family:var(--mono);font-size:9px;color:var(--green);background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.2);padding:2px 7px;border-radius:4px;white-space:nowrap;">Active</span>
+          </div>
+          <div style="font-size:11px;color:var(--muted);margin-bottom:12px;line-height:1.6;border-left:2px solid var(--border);padding-left:10px;">
+            Last email: Today — Bid received from two vendors. Savings validation pending. First look scheduled Friday.
+          </div>
+          <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:12px;">
+            <div style="display:flex;gap:8px;align-items:center;">
+              <span style="font-family:var(--mono);font-size:9px;color:var(--muted);min-width:80px;">Bid Review</span>
+              <span style="font-family:var(--mono);font-size:9px;color:var(--accent);">● In Progress</span>
+              <span style="font-size:10px;color:var(--muted);">Steve</span>
+            </div>
+          </div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap;">
+            <a href="#" style="font-family:var(--mono);font-size:9px;color:var(--accent);background:rgba(79,142,247,0.08);border:1px solid rgba(79,142,247,0.2);padding:3px 8px;border-radius:4px;text-decoration:none;">📁 Drive</a>
+            <a href="#" style="font-family:var(--mono);font-size:9px;color:var(--purple);background:rgba(124,58,237,0.08);border:1px solid rgba(124,58,237,0.2);padding:3px 8px;border-radius:4px;text-decoration:none;">$ ACERO</a>
+            <a href="#" style="font-family:var(--mono);font-size:9px;color:var(--muted);background:rgba(107,107,138,0.08);border:1px solid rgba(107,107,138,0.2);padding:3px 8px;border-radius:4px;text-decoration:none;">📋 1 Action Item</a>
+            <a href="#" style="font-family:var(--mono);font-size:9px;color:var(--muted);background:rgba(107,107,138,0.08);border:1px solid rgba(107,107,138,0.2);padding:3px 8px;border-radius:4px;text-decoration:none;">📎 Bid v1</a>
+          </div>
+        </div>
+
+        <!-- Card 4: Wrap -->
+        <div style="background:var(--card);border:1px solid var(--border);border-top:2px solid var(--muted);border-radius:8px;padding:16px;opacity:0.7;">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;">
+            <div>
+              <div style="font-family:var(--mono);font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;">APR-CLTA-BRD3-2025-011</div>
+              <div style="font-size:13px;font-weight:600;color:var(--text);margin-top:3px;">Brand 3 — Q4 eComm Stills</div>
+            </div>
+            <span style="font-family:var(--mono);font-size:9px;color:var(--muted);background:rgba(107,107,138,0.1);border:1px solid rgba(107,107,138,0.2);padding:2px 7px;border-radius:4px;white-space:nowrap;">Wrapped</span>
+          </div>
+          <div style="font-size:11px;color:var(--muted);margin-bottom:12px;line-height:1.6;border-left:2px solid var(--border);padding-left:10px;">
+            Last email: 3 weeks ago — Final assets delivered and approved. Savings logged to ACERO. Project closed.
+          </div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap;">
+            <a href="#" style="font-family:var(--mono);font-size:9px;color:var(--accent);background:rgba(79,142,247,0.08);border:1px solid rgba(79,142,247,0.2);padding:3px 8px;border-radius:4px;text-decoration:none;">📁 Drive</a>
+            <a href="#" style="font-family:var(--mono);font-size:9px;color:var(--purple);background:rgba(124,58,237,0.08);border:1px solid rgba(124,58,237,0.2);padding:3px 8px;border-radius:4px;text-decoration:none;">$ ACERO</a>
+            <a href="#" style="font-family:var(--mono);font-size:9px;color:var(--muted);background:rgba(107,107,138,0.08);border:1px solid rgba(107,107,138,0.2);padding:3px 8px;border-radius:4px;text-decoration:none;">📎 Final SOW</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="callout accent">
+      <strong>How cards stay current:</strong> Every card is driven by the Status Sheet — updated automatically each time the email processing pipeline runs. The AI-generated email summary reflects what Gemini extracted from the last labeled thread. No one updates these manually.
+    </div>
+    <div class="callout gold" style="margin-top:12px;">
+      <strong>Per-client, not per-user:</strong> Each client gets one dashboard URL, shared openly across the pod. No accounts, no login, no access management. Anyone on the Client A team opens the same view and sees the same live state.
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- IO 2026 NOTE -->
+  <section id="io2026">
+    <div class="section-label">Google I/O 2026</div>
+    <h2>What Just Changed</h2>
+    <p class="section-sub">Several announcements from Google I/O (May 19, 2026) and Cloud Next 2026 are directly relevant to this pipeline — some simplify the build, some validate the approach.</p>
+
+    <div class="grid-2" style="margin-bottom:20px;">
+      <div class="card">
+        <div style="font-family:var(--mono);font-size:9px;color:var(--green);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px;">Available Now</div>
+        <div class="card-title">Workspace Intelligence (GA)</div>
+        <div class="card-body">Now generally available for enterprise customers. Provides a unified semantic context layer across Gmail, Docs, Drive — understanding relationships between projects, collaborators, and documents. Directly relevant to the email processing and status layer.</div>
+      </div>
+      <div class="card">
+        <div style="font-family:var(--mono);font-size:9px;color:var(--green);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px;">Available Now</div>
+        <div class="card-title">Vertex AI → Gemini Enterprise Agent Platform</div>
+        <div class="card-body">Vertex AI has been rebranded and expanded as the Gemini Enterprise Agent Platform — still the same underlying infrastructure this pipeline requires, now with more agent-native tooling including Agent Designer, trigger-based agents, and long-running agents built in.</div>
+      </div>
+      <div class="card">
+        <div style="font-family:var(--mono);font-size:9px;color:var(--gold);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px;">Rolling Out Summer 2026</div>
+        <div class="card-title">Gemini Spark + MCP</div>
+        <div class="card-body">Gemini Spark is a persistent background agent integrated with Gmail, Docs, and Workspace. It expands to third-party tools via MCP this summer. If Spark matures for enterprise use, it could replace or simplify the custom email-watching layer of this pipeline entirely.</div>
+      </div>
+      <div class="card">
+        <div style="font-family:var(--mono);font-size:9px;color:var(--gold);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px;">June 2026</div>
+        <div class="card-title">Gemini 3.5 Pro</div>
+        <div class="card-body">The heavier-weight Gemini 3.5 Pro model drops in June. Gemini 3.5 Flash is available today across all APIs. Either would power the intake conversation and email extraction layers of this pipeline with better reasoning than current models.</div>
+      </div>
+    </div>
+
+    <div class="callout purple">
+      <strong>Bottom line:</strong> The custom build described in this document remains the right approach today — Spark and native agent tools aren't enterprise-ready yet. But the landscape is moving fast. Revisit the email processing and watcher layers once Spark's MCP integration ships this summer before building those components from scratch.
     </div>
   </section>
 
