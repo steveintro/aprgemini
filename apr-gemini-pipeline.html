@@ -1,0 +1,1014 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>APR — Gemini Project Intelligence Pipeline</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0a0a0f;
+      --surface: #12121a;
+      --card: #1a1a26;
+      --border: #2a2a3a;
+      --accent: #4f8ef7;
+      --purple: #7c3aed;
+      --gold: #f59e0b;
+      --text: #e8e8f0;
+      --muted: #6b6b8a;
+      --green: #10b981;
+      --red: #ef4444;
+      --font: 'DM Sans', sans-serif;
+      --mono: 'DM Mono', monospace;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font);
+      line-height: 1.6;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(10,10,15,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 40px;
+      height: 56px;
+    }
+
+    .nav-logo {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .nav-logo span { color: var(--accent); }
+
+    .nav-links {
+      display: flex;
+      gap: 4px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--muted);
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 6px 10px;
+      border-radius: 5px;
+      transition: color 0.2s, background 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--text);
+      background: var(--card);
+    }
+
+    /* SECTIONS */
+    section {
+      min-height: 100vh;
+      padding: 120px 40px 80px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    section.full {
+      max-width: 1100px;
+    }
+
+    /* HERO */
+    #hero {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 100vh;
+      padding-top: 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #hero::before {
+      content: '';
+      position: absolute;
+      top: -100px; right: -100px;
+      width: 500px; height: 500px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(79,142,247,0.1) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    #hero::after {
+      content: '';
+      position: absolute;
+      bottom: -60px; left: -60px;
+      width: 350px; height: 350px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(124,58,237,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      background: rgba(245,158,11,0.12);
+      border: 1px solid rgba(245,158,11,0.3);
+      color: var(--gold);
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 4px;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      font-size: clamp(36px, 5vw, 56px);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      color: var(--text);
+      margin-bottom: 20px;
+    }
+
+    h1 .accent { color: var(--accent); }
+
+    .hero-sub {
+      font-size: 17px;
+      color: var(--muted);
+      max-width: 560px;
+      line-height: 1.7;
+      margin-bottom: 36px;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .tag {
+      background: rgba(79,142,247,0.1);
+      border: 1px solid rgba(79,142,247,0.25);
+      color: var(--accent);
+      font-family: var(--mono);
+      font-size: 10px;
+      padding: 4px 10px;
+      border-radius: 4px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .tag.purple { background: rgba(124,58,237,0.1); border-color: rgba(124,58,237,0.25); color: #a78bfa; }
+    .tag.green { background: rgba(16,185,129,0.1); border-color: rgba(16,185,129,0.25); color: var(--green); }
+    .tag.gold { background: rgba(245,158,11,0.1); border-color: rgba(245,158,11,0.25); color: var(--gold); }
+
+    /* SECTION HEADERS */
+    .section-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 10px;
+    }
+
+    h2 {
+      font-size: clamp(24px, 3vw, 34px);
+      font-weight: 700;
+      letter-spacing: -0.015em;
+      color: var(--text);
+      margin-bottom: 10px;
+    }
+
+    .section-sub {
+      font-size: 14px;
+      color: var(--muted);
+      max-width: 580px;
+      margin-bottom: 40px;
+      line-height: 1.7;
+    }
+
+    /* DIVIDER */
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 0;
+    }
+
+    /* CARDS */
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+    }
+
+    .card-icon { font-size: 24px; margin-bottom: 12px; }
+    .card-title { font-size: 14px; font-weight: 600; color: var(--accent); margin-bottom: 8px; }
+    .card-body { font-size: 13px; color: var(--muted); line-height: 1.7; }
+
+    /* TABLE */
+    .table-wrap { border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+
+    table { width: 100%; border-collapse: collapse; }
+
+    thead th {
+      background: var(--border);
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 10px 14px;
+      text-align: left;
+    }
+
+    tbody td {
+      background: var(--card);
+      padding: 12px 14px;
+      font-size: 12px;
+      border-top: 1px solid var(--border);
+      vertical-align: top;
+      line-height: 1.6;
+    }
+
+    .td-label { color: var(--text); font-weight: 600; }
+    .td-bad { color: #f87171; }
+    .td-good { color: var(--green); }
+
+    /* FLOW DIAGRAM */
+    .flow-section { margin-bottom: 32px; }
+
+    .flow-label {
+      font-family: var(--mono);
+      font-size: 9px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 10px;
+    }
+
+    .flow-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .flow-node {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent);
+      border-radius: 8px;
+      padding: 10px 14px;
+      min-width: 140px;
+      flex: 1;
+    }
+
+    .flow-node.purple { border-left-color: var(--purple); }
+    .flow-node.gold { border-left-color: var(--gold); }
+    .flow-node.green { border-left-color: var(--green); }
+
+    .flow-node-icon { font-size: 15px; margin-bottom: 4px; }
+    .flow-node-label { font-size: 12px; font-weight: 600; color: var(--text); }
+    .flow-node-sub { font-family: var(--mono); font-size: 10px; color: var(--muted); margin-top: 2px; }
+
+    .flow-arrow {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      flex-shrink: 0;
+    }
+
+    .flow-arrow-label {
+      font-family: var(--mono);
+      font-size: 9px;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .flow-arrow-icon { color: var(--accent); font-size: 18px; }
+
+    .flow-vert {
+      color: var(--accent);
+      font-size: 20px;
+      text-align: center;
+      margin: 4px 0;
+    }
+
+    /* STEPS */
+    .steps { display: flex; flex-direction: column; gap: 12px; }
+
+    .step {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px 18px;
+    }
+
+    .step-num {
+      font-family: var(--mono);
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--accent);
+      min-width: 36px;
+      padding-top: 2px;
+    }
+
+    .step-title { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+    .step-body { font-size: 12px; color: var(--muted); line-height: 1.6; }
+
+    /* CHECKLIST */
+    .checklist { display: flex; flex-direction: column; gap: 10px; }
+
+    .check-item {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .check-item.good { color: var(--text); }
+    .check-item.bad { color: var(--muted); }
+    .check-icon { font-size: 14px; margin-top: 2px; flex-shrink: 0; }
+
+    /* ROADMAP */
+    .roadmap { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+
+    .roadmap-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-top: 3px solid var(--accent);
+      border-radius: 10px;
+      padding: 20px 18px;
+    }
+
+    .roadmap-card.purple { border-top-color: var(--purple); }
+    .roadmap-card.gold { border-top-color: var(--gold); }
+
+    .roadmap-phase {
+      font-family: var(--mono);
+      font-size: 9px;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 6px;
+    }
+
+    .roadmap-card.purple .roadmap-phase { color: #a78bfa; }
+    .roadmap-card.gold .roadmap-phase { color: var(--gold); }
+
+    .roadmap-title { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 14px; }
+
+    .roadmap-items { display: flex; flex-direction: column; gap: 8px; }
+
+    .roadmap-item {
+      display: flex;
+      gap: 8px;
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .roadmap-arrow { color: var(--accent); flex-shrink: 0; }
+    .roadmap-card.purple .roadmap-arrow { color: #a78bfa; }
+    .roadmap-card.gold .roadmap-arrow { color: var(--gold); }
+
+    /* NEXT STEPS TABLE */
+    .next-items { display: flex; flex-direction: column; gap: 8px; }
+
+    .next-item {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 16px;
+    }
+
+    .next-owner {
+      font-family: var(--mono);
+      font-size: 9px;
+      color: var(--accent);
+      text-transform: uppercase;
+      min-width: 64px;
+    }
+
+    .next-action { flex: 1; font-size: 13px; color: var(--text); line-height: 1.5; }
+
+    .priority {
+      font-family: var(--mono);
+      font-size: 9px;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: 4px;
+    }
+
+    .priority.high { color: var(--red); background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.2); }
+    .priority.med { color: var(--gold); background: rgba(245,158,11,0.1); border: 1px solid rgba(245,158,11,0.2); }
+    .priority.low { color: var(--green); background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.2); }
+
+    /* CALLOUT */
+    .callout {
+      border-radius: 10px;
+      padding: 16px 20px;
+      font-size: 13px;
+      line-height: 1.7;
+      margin-top: 20px;
+    }
+
+    .callout.accent { background: rgba(79,142,247,0.08); border: 1px solid rgba(79,142,247,0.2); color: var(--accent); }
+    .callout.gold { background: rgba(245,158,11,0.08); border: 1px solid rgba(245,158,11,0.2); color: var(--gold); }
+    .callout.green { background: rgba(16,185,129,0.08); border: 1px solid rgba(16,185,129,0.2); color: var(--green); }
+    .callout.purple { background: rgba(124,58,237,0.08); border: 1px solid rgba(124,58,237,0.2); color: #a78bfa; }
+
+    .callout strong { font-weight: 700; }
+
+    /* SAVINGS */
+    .savings-compare {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .savings-option {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px;
+    }
+
+    .savings-option-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+
+    .savings-option-sub {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--muted);
+      margin-bottom: 14px;
+    }
+
+    .savings-pros { margin-bottom: 10px; }
+    .savings-pros-label {
+      font-family: var(--mono);
+      font-size: 9px;
+      color: var(--green);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 6px;
+    }
+
+    .savings-pros-label.bad { color: var(--red); }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 32px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .footer-text {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--muted);
+    }
+
+    @media (max-width: 700px) {
+      nav { padding: 0 20px; }
+      .nav-links { display: none; }
+      section { padding: 100px 20px 60px; }
+      .grid-2, .grid-3, .roadmap, .savings-compare { grid-template-columns: 1fr; }
+      .flow-row { flex-direction: column; align-items: stretch; }
+      .flow-arrow { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">APR — <span>Gemini Pipeline</span></div>
+    <ul class="nav-links">
+      <li><a href="#overview">Overview</a></li>
+      <li><a href="#why-vertex">Vertex AI</a></li>
+      <li><a href="#flow">System Flow</a></li>
+      <li><a href="#intake">Intake</a></li>
+      <li><a href="#multiuser">Multi-User</a></li>
+      <li><a href="#savings">Savings</a></li>
+      <li><a href="#scale">Scale</a></li>
+      <li><a href="#next">Next Steps</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="eyebrow">APR Internal Concept — Confidential</div>
+    <h1>Gemini-Powered<br /><span class="accent">Project Intelligence</span><br />Pipeline</h1>
+    <p class="hero-sub">A shared, AI-driven intake, tracking, savings validation, and status system for APR production projects — built entirely on Google Workspace and Vertex AI.</p>
+    <div class="tags">
+      <span class="tag">Intake Automation</span>
+      <span class="tag green">Email Processing</span>
+      <span class="tag purple">Savings Validation</span>
+      <span class="tag gold">Live Dashboard</span>
+      <span class="tag">ACERO-Ready</span>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- OVERVIEW -->
+  <section id="overview">
+    <div class="section-label">Executive Summary</div>
+    <h2>What This Is & Why It Matters</h2>
+    <p class="section-sub">Project communication is scattered across individual inboxes with no shared source of truth. This pipeline changes that.</p>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-icon">⚡</div>
+        <div class="card-title">The Problem</div>
+        <div class="card-body">Project emails land in individual inboxes. Phase handoffs are verbal. Status lives in people's heads. There's no consistent record of what's active, who owns what, or what savings were captured.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">🧠</div>
+        <div class="card-title">The Solution</div>
+        <div class="card-body">A Gemini-powered chat intake tool creates standardized project records. Automated email processing keeps those records updated across all team members using Gmail thread ID deduplication.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">💰</div>
+        <div class="card-title">Savings Intelligence</div>
+        <div class="card-body">A dedicated savings validation tool reviews bids against APR benchmarks and outputs structured findings — attached to the project record, feeding directly into ACERO reporting.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">📊</div>
+        <div class="card-title">The Outcome</div>
+        <div class="card-body">A live dashboard visible to all stakeholders showing every active project, current phase, owner, last activity, and validated savings. No manual updates. No version control issues.</div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- WHY VERTEX -->
+  <section id="why-vertex">
+    <div class="section-label">Infrastructure</div>
+    <h2>Why We Need Vertex AI</h2>
+    <p class="section-sub">Enterprise Gemini in Workspace (Gmail, Docs, Gems) is a UI layer — it can't power an automated pipeline or handle client data outside its chat interface. Vertex AI is the API layer that makes this buildable.</p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Requirement</th>
+            <th>Without Vertex AI</th>
+            <th>With Vertex AI</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="td-label">Powering the AI pipeline</td>
+            <td class="td-bad">✗ Personal API key — data leaves enterprise boundary</td>
+            <td class="td-good">✓ Enterprise-credentialed API calls within Google Cloud</td>
+          </tr>
+          <tr>
+            <td class="td-label">Multi-user access</td>
+            <td class="td-bad">✗ Each user needs their own credentials</td>
+            <td class="td-good">✓ One service account, all users authenticate via Workspace login</td>
+          </tr>
+          <tr>
+            <td class="td-label">Client data governance</td>
+            <td class="td-bad">✗ No guarantee of where client data goes</td>
+            <td class="td-good">✓ Google Cloud enterprise DPA applies — data stays inside APR's agreement</td>
+          </tr>
+          <tr>
+            <td class="td-label">Usage visibility & audit</td>
+            <td class="td-bad">✗ No audit trail</td>
+            <td class="td-good">✓ All API calls logged, billed to one corporate Cloud project</td>
+          </tr>
+          <tr>
+            <td class="td-label">Apps Script integration</td>
+            <td class="td-bad">✗ Manual credential management per user</td>
+            <td class="td-good">✓ Service account authenticates on behalf of all scripts</td>
+          </tr>
+          <tr>
+            <td class="td-label">Future scaling</td>
+            <td class="td-bad">✗ Ad hoc personal tooling, not shareable</td>
+            <td class="td-good">✓ Production-grade, IT-managed, expandable to any client or team</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout accent" style="margin-top:20px;">
+      <strong>What to ask IT:</strong> "Does our enterprise Workspace license include Vertex AI or Google Cloud access for internal tool development?" The key product is <strong>Vertex AI on Google Cloud</strong> — this is separate from the Workspace UI features most teams use.
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- FLOW -->
+  <section id="flow" class="full">
+    <div class="section-label">Architecture</div>
+    <h2>End-to-End System Flow</h2>
+    <p class="section-sub">Three interconnected pipeline layers — all writing to a single shared source of truth.</p>
+
+    <div class="flow-section">
+      <div class="flow-label">— Layer 1: Project Intake</div>
+      <div class="flow-row">
+        <div class="flow-node">
+          <div class="flow-node-icon">💬</div>
+          <div class="flow-node-label">Chat Intake Tool</div>
+          <div class="flow-node-sub">Apps Script Web App</div>
+        </div>
+        <div class="flow-arrow"><div class="flow-arrow-label">conversation</div><div class="flow-arrow-icon">→</div></div>
+        <div class="flow-node purple">
+          <div class="flow-node-icon">🧠</div>
+          <div class="flow-node-label">Vertex AI / Gemini</div>
+          <div class="flow-node-sub">Structured Q&A intake</div>
+        </div>
+        <div class="flow-arrow"><div class="flow-arrow-label">generates</div><div class="flow-arrow-icon">→</div></div>
+        <div class="flow-node gold">
+          <div class="flow-node-icon">📄</div>
+          <div class="flow-node-label">JSON Output</div>
+          <div class="flow-node-sub">project-id, client, phase…</div>
+        </div>
+        <div class="flow-arrow"><div class="flow-arrow-label">writes to</div><div class="flow-arrow-icon">→</div></div>
+        <div class="flow-node green">
+          <div class="flow-node-icon">📁</div>
+          <div class="flow-node-label">Drive /inbox</div>
+          <div class="flow-node-sub">Shared team folder</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flow-vert">↓</div>
+
+    <div class="flow-section">
+      <div class="flow-label">— Layer 2: Automation Watcher</div>
+      <div class="flow-row">
+        <div class="flow-node">
+          <div class="flow-node-icon">👁️</div>
+          <div class="flow-node-label">Apps Script Watcher</div>
+          <div class="flow-node-sub">Monitors /inbox folder</div>
+        </div>
+        <div class="flow-arrow"><div class="flow-arrow-label">creates</div><div class="flow-arrow-icon">→</div></div>
+        <div class="flow-node green">
+          <div class="flow-node-icon">🗂️</div>
+          <div class="flow-node-label">Drive Folder Structure</div>
+          <div class="flow-node-sub">Client / Brand / Project</div>
+        </div>
+        <div class="flow-arrow"><div class="flow-arrow-label">creates</div><div class="flow-arrow-icon">→</div></div>
+        <div class="flow-node gold">
+          <div class="flow-node-icon">🏷️</div>
+          <div class="flow-node-label">Gmail Label</div>
+          <div class="flow-node-sub">APR-ClientA-Brand-ID</div>
+        </div>
+        <div class="flow-arrow"><div class="flow-arrow-label">updates</div><div class="flow-arrow-icon">→</div></div>
+        <div class="flow-node purple">
+          <div class="flow-node-icon">📊</div>
+          <div class="flow-node-label">Status Sheet</div>
+          <div class="flow-node-sub">Single source of truth</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flow-vert">↓</div>
+
+    <div class="flow-section">
+      <div class="flow-label">— Layer 3: Ongoing Email Processing</div>
+      <div class="flow-row">
+        <div class="flow-node">
+          <div class="flow-node-icon">📧</div>
+          <div class="flow-node-label">Email Labeled</div>
+          <div class="flow-node-sub">Any team member</div>
+        </div>
+        <div class="flow-arrow"><div class="flow-arrow-label">thread ID match</div><div class="flow-arrow-icon">→</div></div>
+        <div class="flow-node">
+          <div class="flow-node-icon">⚙️</div>
+          <div class="flow-node-label">Script Deduplicates</div>
+          <div class="flow-node-sub">Checks thread ID in Sheet</div>
+        </div>
+        <div class="flow-arrow"><div class="flow-arrow-label">sends to</div><div class="flow-arrow-icon">→</div></div>
+        <div class="flow-node purple">
+          <div class="flow-node-icon">🧠</div>
+          <div class="flow-node-label">Vertex AI</div>
+          <div class="flow-node-sub">Extract actions, dates, type</div>
+        </div>
+        <div class="flow-arrow"><div class="flow-arrow-label">updates</div><div class="flow-arrow-icon">→</div></div>
+        <div class="flow-node purple">
+          <div class="flow-node-icon">📊</div>
+          <div class="flow-node-label">Status Sheet Row</div>
+          <div class="flow-node-sub">Same project record</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout accent">
+      <strong>Key insight:</strong> Gmail labels are private per user — but Gmail Thread IDs are universal. The thread ID is the deduplication key that prevents duplicate records when multiple team members label the same email. The label naming convention is the shared language that connects every user to the same project record.
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- INTAKE -->
+  <section id="intake">
+    <div class="section-label">Intake Tool</div>
+    <h2>The Chat Intake Experience</h2>
+    <p class="section-sub">A Gem-like conversational interface built as an Apps Script web app. Colleagues open it in a browser, authenticated via their Workspace login. No separate credentials, no training required.</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">01</div>
+        <div>
+          <div class="step-title">Open the tool</div>
+          <div class="step-body">Team member opens the Apps Script web app in any browser — authenticated automatically via Google Workspace login. No separate credentials or accounts required.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <div>
+          <div class="step-title">Gemini guides the intake conversation</div>
+          <div class="step-body">AI prompts the user through: client (from fixed list), brand, project type, deliverables, timeline, PO number, phase owner, team members. Fixed options enforce naming consistency — no free-text client names that drift.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <div>
+          <div class="step-title">Confirm the summary</div>
+          <div class="step-body">Gemini presents a full structured summary before writing anything. User confirms or corrects. Nothing fires until approved.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">04</div>
+        <div>
+          <div class="step-title">Pipeline fires automatically</div>
+          <div class="step-body">Tool writes a JSON record to the shared Drive inbox folder. The watcher script detects the new file, creates the Drive folder structure, Gmail label, and Sheet row — all in one automated sequence.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">05</div>
+        <div>
+          <div class="step-title">Phase handoff notification sent</div>
+          <div class="step-body">When a phase is marked complete, the next phase owner receives a notification with the exact label name pre-filled. No lookup, no risk of naming error. If someone is pulled in mid-project, the same tool offers a project lookup mode to retrieve the label instantly.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- MULTI USER -->
+  <section id="multiuser">
+    <div class="section-label">Multi-User Logic</div>
+    <h2>Teams, Phases & Deduplication</h2>
+    <p class="section-sub">Multiple people on the same project, emails going to everyone, phase ownership changing — here's how the pipeline handles it without creating chaos.</p>
+    <div class="grid-2" style="margin-bottom:24px;">
+      <div>
+        <div class="flow-label" style="margin-bottom:12px;">Without deduplication logic</div>
+        <div class="checklist">
+          <div class="check-item bad"><span class="check-icon">✗</span>Steve, Julie, and Terry all receive the same email thread</div>
+          <div class="check-item bad"><span class="check-icon">✗</span>Each labels it — three script fires, three new rows created</div>
+          <div class="check-item bad"><span class="check-icon">✗</span>Status Sheet has 3 duplicate project records</div>
+          <div class="check-item bad"><span class="check-icon">✗</span>Phase handoffs require manual communication of label names</div>
+          <div class="check-item bad"><span class="check-icon">✗</span>Naming drift — "ClientA" vs "Client-A" vs "client a" across users</div>
+        </div>
+      </div>
+      <div>
+        <div class="flow-label" style="margin-bottom:12px;">With thread ID deduplication</div>
+        <div class="checklist">
+          <div class="check-item good"><span class="check-icon">✓</span>Gmail Thread ID is identical for all recipients of the same thread</div>
+          <div class="check-item good"><span class="check-icon">✓</span>Script checks Thread ID against Sheet before any write operation</div>
+          <div class="check-item good"><span class="check-icon">✓</span>Existing record: update only. New thread: create row. Never duplicate.</div>
+          <div class="check-item good"><span class="check-icon">✓</span>Phase fields per row — Live Action and Post each have their own owner and status</div>
+          <div class="check-item good"><span class="check-icon">✓</span>Phase handoff sends exact label name to incoming owner automatically</div>
+          <div class="check-item good"><span class="check-icon">✓</span>Self-serve lookup mode for anyone pulled in mid-project</div>
+        </div>
+      </div>
+    </div>
+    <div class="callout gold">
+      <strong>The label as shared language:</strong> The intake tool generates the canonical label name from validated inputs — nobody types it manually. Every person on a project uses the same label string. That consistency is what makes thread ID matching work reliably across a distributed team.
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- SAVINGS -->
+  <section id="savings">
+    <div class="section-label">Savings Validation</div>
+    <h2>Bid Review & Savings Intelligence</h2>
+    <p class="section-sub">The savings validation tool is a core part of the pipeline — not an afterthought. It reviews bids against APR benchmarks, flags opportunities by category, and outputs structured findings that attach directly to the project record.</p>
+
+    <div class="savings-compare">
+      <div class="savings-option">
+        <div class="savings-option-title">NotebookLM</div>
+        <div class="savings-option-sub">Available today with enterprise Workspace</div>
+        <div class="savings-pros">
+          <div class="savings-pros-label">Works for</div>
+          <div class="checklist">
+            <div class="check-item good"><span class="check-icon">✓</span>Grounded responses against uploaded reference docs</div>
+            <div class="check-item good"><span class="check-icon">✓</span>Zero build — available immediately</div>
+            <div class="check-item good"><span class="check-icon">✓</span>Good for ad hoc gut-check reviews</div>
+          </div>
+        </div>
+        <div class="savings-pros">
+          <div class="savings-pros-label bad">Limitations</div>
+          <div class="checklist">
+            <div class="check-item bad"><span class="check-icon">✗</span>Narrative output only — not structured or pipeline-ready</div>
+            <div class="check-item bad"><span class="check-icon">✗</span>No memory of past projects or saved findings</div>
+            <div class="check-item bad"><span class="check-icon">✗</span>Not integrated with project records or ACERO</div>
+            <div class="check-item bad"><span class="check-icon">✗</span>Manual, one-off — not scalable across the team</div>
+          </div>
+        </div>
+      </div>
+      <div class="savings-option">
+        <div class="savings-option-title">Custom Vertex AI Tool</div>
+        <div class="savings-option-sub">Phase 1.5 of the pipeline build</div>
+        <div class="savings-pros">
+          <div class="savings-pros-label">Works for</div>
+          <div class="checklist">
+            <div class="check-item good"><span class="check-icon">✓</span>Structured JSON output — categorized savings flags per line item</div>
+            <div class="check-item good"><span class="check-icon">✓</span>Findings attached to the project record in the Status Sheet</div>
+            <div class="check-item good"><span class="check-icon">✓</span>APR benchmark logic baked in — consistent across all reviewers</div>
+            <div class="check-item good"><span class="check-icon">✓</span>Savings data flows directly into ACERO reporting</div>
+            <div class="check-item good"><span class="check-icon">✓</span>Shareable across the team, no expertise required to run</div>
+          </div>
+        </div>
+        <div class="savings-pros">
+          <div class="savings-pros-label bad">Limitations</div>
+          <div class="checklist">
+            <div class="check-item bad"><span class="check-icon">✗</span>Requires Vertex AI access first</div>
+            <div class="check-item bad"><span class="check-icon">✗</span>Build effort — scoped as Phase 1.5 after intake pipeline</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flow-section">
+      <div class="flow-label">— Savings Validation Flow</div>
+      <div class="flow-row">
+        <div class="flow-node">
+          <div class="flow-node-icon">📋</div>
+          <div class="flow-node-label">Bid / Estimate Uploaded</div>
+          <div class="flow-node-sub">Via intake tool or Drive</div>
+        </div>
+        <div class="flow-arrow"><div class="flow-arrow-label">sends to</div><div class="flow-arrow-icon">→</div></div>
+        <div class="flow-node purple">
+          <div class="flow-node-icon">🧠</div>
+          <div class="flow-node-label">Vertex AI</div>
+          <div class="flow-node-sub">APR benchmark prompt logic</div>
+        </div>
+        <div class="flow-arrow"><div class="flow-arrow-label">outputs</div><div class="flow-arrow-icon">→</div></div>
+        <div class="flow-node gold">
+          <div class="flow-node-icon">💰</div>
+          <div class="flow-node-label">Structured Findings</div>
+          <div class="flow-node-sub">Categorized savings flags</div>
+        </div>
+        <div class="flow-arrow"><div class="flow-arrow-label">attaches to</div><div class="flow-arrow-icon">→</div></div>
+        <div class="flow-node green">
+          <div class="flow-node-icon">📊</div>
+          <div class="flow-node-label">Project Record</div>
+          <div class="flow-node-sub">Sheet row + ACERO feed</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout purple">
+      <strong>Recommendation:</strong> Use NotebookLM as a stopgap while waiting on Vertex AI access. Build the custom savings tool as Phase 1.5 — right after the intake and email pipeline is running, before the ACERO integration. The APR benchmark and validation logic is already well-defined and maps cleanly into a structured Vertex AI prompt.
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- SCALE -->
+  <section id="scale">
+    <div class="section-label">Roadmap</div>
+    <h2>Scale & ACERO Integration</h2>
+    <p class="section-sub">The pipeline is designed from the start to expand — additional clients use the same schema, additional users need no new infrastructure, and ACERO integration is a natural Phase 3.</p>
+    <div class="roadmap">
+      <div class="roadmap-card">
+        <div class="roadmap-phase">Phase 1</div>
+        <div class="roadmap-title">Client A Pilot</div>
+        <div class="roadmap-items">
+          <div class="roadmap-item"><span class="roadmap-arrow">→</span>Single client pipeline</div>
+          <div class="roadmap-item"><span class="roadmap-arrow">→</span>Small core team (2-4 people)</div>
+          <div class="roadmap-item"><span class="roadmap-arrow">→</span>Manual label application</div>
+          <div class="roadmap-item"><span class="roadmap-arrow">→</span>Google Sheet as dashboard</div>
+          <div class="roadmap-item"><span class="roadmap-arrow">→</span>Validate deduplication logic</div>
+        </div>
+      </div>
+      <div class="roadmap-card purple">
+        <div class="roadmap-phase">Phase 1.5 + 2</div>
+        <div class="roadmap-title">Savings Tool + Expansion</div>
+        <div class="roadmap-items">
+          <div class="roadmap-item"><span class="roadmap-arrow">→</span>Savings validation tool live</div>
+          <div class="roadmap-item"><span class="roadmap-arrow">→</span>Additional clients (same schema)</div>
+          <div class="roadmap-item"><span class="roadmap-arrow">→</span>Broader team onboarding</div>
+          <div class="roadmap-item"><span class="roadmap-arrow">→</span>Google Sites status page</div>
+          <div class="roadmap-item"><span class="roadmap-arrow">→</span>Phase handoff automation refined</div>
+        </div>
+      </div>
+      <div class="roadmap-card gold">
+        <div class="roadmap-phase">Phase 3</div>
+        <div class="roadmap-title">ACERO Integration</div>
+        <div class="roadmap-items">
+          <div class="roadmap-item"><span class="roadmap-arrow">→</span>Bi-directional sync with ACERO</div>
+          <div class="roadmap-item"><span class="roadmap-arrow">→</span>Project IDs map to ACERO records</div>
+          <div class="roadmap-item"><span class="roadmap-arrow">→</span>Savings findings flow into ACERO</div>
+          <div class="roadmap-item"><span class="roadmap-arrow">→</span>Full production-to-finance loop</div>
+          <div class="roadmap-item"><span class="roadmap-arrow">→</span>No double-entry between systems</div>
+        </div>
+      </div>
+    </div>
+    <div class="callout gold">
+      <strong>ACERO note:</strong> The standardized project ID schema generated at intake is intentionally designed to map cleanly to ACERO project records. Phase 3 closes the loop between production tracking and financial reporting — validated savings from the pipeline become ACERO entries without manual re-entry.
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- NEXT STEPS -->
+  <section id="next">
+    <div class="section-label">Next Steps</div>
+    <h2>What Needs to Happen to Build This</h2>
+    <p class="section-sub">Prioritized by dependency — the first two are blockers for everything else.</p>
+    <div class="next-items">
+      <div class="next-item">
+        <div class="next-owner">Steve</div>
+        <div class="next-action">Confirm whether enterprise Workspace license includes Vertex AI / Google Cloud access for internal tool development</div>
+        <div class="priority high">High</div>
+      </div>
+      <div class="next-item">
+        <div class="next-owner">IT Admin</div>
+        <div class="next-action">Provision Google Cloud project, enable Vertex AI API, create service account with appropriate scopes</div>
+        <div class="priority high">High</div>
+      </div>
+      <div class="next-item">
+        <div class="next-owner">Steve</div>
+        <div class="next-action">Define project ID schema, client list, and intake question set for the Client A pilot</div>
+        <div class="priority med">Med</div>
+      </div>
+      <div class="next-item">
+        <div class="next-owner">Steve</div>
+        <div class="next-action">Build Apps Script web app — intake chat UI, Drive watcher, Gmail label creation, Status Sheet updater</div>
+        <div class="priority med">Med</div>
+      </div>
+      <div class="next-item">
+        <div class="next-owner">Steve</div>
+        <div class="next-action">Build savings validation Vertex AI tool with APR benchmark prompt logic and structured output schema</div>
+        <div class="priority med">Med</div>
+      </div>
+      <div class="next-item">
+        <div class="next-owner">Team</div>
+        <div class="next-action">Pilot with 2-3 colleagues on next active project — validate deduplication, phase handoff, and savings flow</div>
+        <div class="priority low">Low</div>
+      </div>
+      <div class="next-item">
+        <div class="next-owner">Steve</div>
+        <div class="next-action">Document, refine, and propose as a COE deliverable and scalable APR internal tool</div>
+        <div class="priority low">Low</div>
+      </div>
+    </div>
+    <div class="callout green" style="margin-top:24px;">
+      <strong>While waiting on Vertex AI access:</strong> Start with NotebookLM for savings validation gut-checks — upload APR benchmark docs and rate card references, paste in bids, get narrative feedback. No build required, available today with enterprise Workspace.
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <footer>
+    <div class="footer-text">APR — Gemini Project Intelligence Pipeline — Internal Concept</div>
+    <div class="footer-text">Confidential — Not for external distribution</div>
+  </footer>
+
+</body>
+</html>
